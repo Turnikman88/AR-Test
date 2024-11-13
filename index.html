@@ -1,162 +1,31 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-          "mindar-image-three":"./mindar-image-three.prod.js"
-        }
-      }
-      </script>
+    <title>App Link Test</title>
     <style>
-      html, body {position: relative; margin: 0; width: 100%; height: 100%; overflow: hidden}
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        a {
+            font-size: 18px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
-  </head>
-  <body>
-    <script type="module">
-      import * as THREE from 'three';
-      import { MindARThree } from 'mindar-image-three';
-      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-      import { AudioLoader } from 'three';
-
-
-
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const start = async() => {
-
-            const mockWithVideo = (path) => {
-  navigator.mediaDevices.getUserMedia = () => {
-    return new Promise((resolve, reject) => {
-      const video = document.createElement("video");
-
-      video.oncanplay = () => {
-	const startButton = document.createElement("button");
-	startButton.innerHTML = "start";
-	startButton.style.position = 'fixed';
-	startButton.style.zIndex = 10000;
-	document.body.appendChild(startButton);
-
-	startButton.addEventListener('click', () => {
-	  const stream = video.captureStream();
-	  video.play();
-	  document.body.removeChild(startButton);
-	  resolve(stream);
-	});
-      };
-      video.setAttribute('loop', '');
-      video.setAttribute("src", path);
-    });
-  };
-}
-
-        //mockWithVideo('../../assets/mock-videos/musicband1.mp4');
-
-    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-      container: document.body,
-      imageTargetSrc: 'tattoo.mind',
-    });
-    const {renderer, scene, camera} = mindarThree;
-
-    const light = new THREE.HemisphereLight( 0xffffff, 0xbbbbff, 1 );
-    scene.add(light);
-
-    const loadGLTF = (path) => {
-  return new Promise((resolve, reject) => {
-    const loader = new GLTFLoader();
-    loader.load(
-      path,
-      (gltf) => resolve(gltf),
-      undefined,
-      (error) => reject(error)
-    );
-  });
-};
-
-const loadAudio = (path) => {
-  return new Promise((resolve, reject) => {
-    const loader = new AudioLoader();
-    loader.load(
-      path,
-      (buffer) => resolve(buffer),
-      undefined,
-      (error) => reject(error)
-    );
-  });
-};
-
-    const raccoon = await loadGLTF('scene.gltf');
-    raccoon.scene.scale.set(0.1, 0.1, 0.1);
-    raccoon.scene.position.set(0, -0.4, 0);
-    raccoon.scene.userData.clickable = true;
-
-    const anchor = mindarThree.addAnchor(0);
-    anchor.group.add(raccoon.scene);
-
-    const audioClip = await loadAudio('musicband-background.mp3');
-
-    const audioListener = new THREE.AudioListener();
-    const audio = new THREE.PositionalAudio(audioListener);
-
-    
-    const clock = new THREE.Clock();
-    const mixer = new THREE.AnimationMixer(raccoon.scene);
-    const action = mixer.clipAction(raccoon.animations[0]);
-    action.play();
-
-    camera.add(audioListener);
-    anchor.group.add(audio);
-
-    audio.setRefDistance(1000);
-
-    audio.setBuffer(audioClip);
-    audio.setLoop(true);
-
-    anchor.onTargetFound = () => {
-      audio.play();
-    };
-
-    anchor.onTargetLost = () => {
-      audio.pause();
-    };
-
-    document.body.addEventListener("click", (e) => {
-      const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-      const mouseY = -1 * ((e.clientY / window.innerHeight) * 2 - 1);
-      const mouse = new THREE.Vector2(mouseX, mouseY);
-
-      const raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(mouse, camera);
-
-      const intersects = raycaster.intersectObjects(scene.children, true);
-
-      if(intersects.length > 0){
-        let o = intersects[0].object;
-        
-        while(o.parent && !o.userData.clickable){
-          o = o.parent;
-        }
-
-        if(o.userData.clickable){
-          if(o == raccoon.scene){
-            audio.pause();
-          }
-        }
-      }
-    });
-
-    await mindarThree.start();
-    renderer.setAnimationLoop(() => {
-      const delta = clock.getDelta();
-      mixer.update(delta);
-      renderer.render(scene, camera);
-    });
-  }
-  start();
-});
-
-    </script>
-  </body>
+</head>
+<body>
+    <h1>Welcome to Our App Link Test Page</h1>
+    <p>If you have our app installed, click the link below to open it:</p>
+    <a href="https://yourdomain.com/download?downloadUrl=https://example.com/DB.zip">
+        Open the App
+    </a>
+    <p>If you don’t have the app installed, this link will open the web version instead.</p>
+</body>
 </html>
