@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "SpomenAR",
+            "package_name": "com.Erebus.SpomenAR",
+            "sha256_cert_fingerprints": [
+                "bc9bf1841a386fab5cdde5c3dd4f8086e90561d44986eab2878a16adee1d484a"
+            ]
+        }
+    }
+]
