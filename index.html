@@ -1,15 +1,45 @@
 <html>
     <head>
-       <meta charset="utf-8">
-       <script type="text/javascript">
-           window.onload = function() {
-               window.location.href = "unitydl://mylink?parameter=https://turnikman88.github.io/AR-Test";
-           };
-       </script>
+        <meta charset="utf-8">
+        <style>
+            body {
+                background-color: #333333;
+                color: #FFFFFF;
+                font-family: Arial, sans-serif;
+                text-align: center;
+                margin-top: 20%;
+            }
+            h1 {
+                font-size: 2.5em;
+                margin-bottom: 20px;
+            }
+            p {
+                font-size: 1.2em;
+            }
+            .button {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 1.2em;
+                color: #FFFFFF;
+                background-color: #FF5733;
+                border: none;
+                border-radius: 5px;
+                text-decoration: none;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .button:hover {
+                background-color: #FF4500;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function() {
+                window.location.href = "unitydl://mylink?parameter=https://turnikman88.github.io/AR-Test";
+            };
+        </script>
     </head>
     <body>
-       <h1>My Deep Link Test Page</h1>
-       <p><a href="unitydl://https://turnikman88.github.io/AR-Test/">Launch</a></p>
-       <p><a href="unitydl://mylink?parameter=https://turnikman88.github.io/AR-Test">Launch with Parameter</a></p>
+        <h1>My Deep Link Test Page</h1>
+        <p><a href="unitydl://mylink?parameter=https://turnikman88.github.io/AR-Test" class="button">Download DB</a></p>
     </body>
 </html>
